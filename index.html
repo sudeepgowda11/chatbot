@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sage — an AI you can think with</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235EEAD4'/%3E%3Cstop offset='1' stop-color='%238B93FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='42' fill='url(%23g)'/%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="styles.css?v=2" />
+</head>
+
+<body>
+
+    <!-- ============================================================
+     Reusable icon definitions. Referenced everywhere via <use>.
+     ============================================================ -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <symbol id="i-menu" viewBox="0 0 24 24">
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+            </symbol>
+            <symbol id="i-close" viewBox="0 0 24 24">
+                <line x1="6" y1="6" x2="18" y2="18" />
+                <line x1="18" y1="6" x2="6" y2="18" />
+            </symbol>
+            <symbol id="i-plus" viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+            </symbol>
+            <symbol id="i-send" viewBox="0 0 24 24">
+                <line x1="12" y1="19" x2="12" y2="6" />
+                <polyline points="6,12 12,6 18,12" />
+            </symbol>
+            <symbol id="i-clip" viewBox="0 0 24 24">
+                <path d="M8 12.5 V7 a3 3 0 0 1 6 0 v9 a5 5 0 0 1 -10 0 v-7.5" />
+            </symbol>
+            <symbol id="i-mic" viewBox="0 0 24 24">
+                <rect x="9" y="3" width="6" height="11" rx="3" />
+                <path d="M5.5 11 a6.5 6.5 0 0 0 13 0" />
+                <line x1="12" y1="17.5" x2="12" y2="21" />
+                <line x1="8.5" y1="21" x2="15.5" y2="21" />
+            </symbol>
+            <symbol id="i-sun" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="4" />
+                <line x1="12" y1="1.5" x2="12" y2="4.5" />
+                <line x1="12" y1="19.5" x2="12" y2="22.5" />
+                <line x1="1.5" y1="12" x2="4.5" y2="12" />
+                <line x1="19.5" y1="12" x2="22.5" y2="12" />
+                <line x1="4.4" y1="4.4" x2="6.5" y2="6.5" />
+                <line x1="17.5" y1="17.5" x2="19.6" y2="19.6" />
+                <line x1="4.4" y1="19.6" x2="6.5" y2="17.5" />
+                <line x1="17.5" y1="6.5" x2="19.6" y2="4.4" />
+            </symbol>
+            <symbol id="i-moon" viewBox="0 0 24 24">
+                <path d="M20 14.5 A8 8 0 1 1 9.5 4 A6.4 6.4 0 0 0 20 14.5 Z" />
+            </symbol>
+            <symbol id="i-sliders" viewBox="0 0 24 24">
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <circle cx="9" cy="6" r="2" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <circle cx="16" cy="12" r="2" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+                <circle cx="10" cy="18" r="2" />
+            </symbol>
+            <symbol id="i-trash" viewBox="0 0 24 24">
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <path d="M9 7 V4 h6 v3" />
+                <path d="M6.5 7 L7.5 20 h9 L17.5 7" />
+            </symbol>
+            <symbol id="i-copy" viewBox="0 0 24 24">
+                <rect x="8" y="8" width="12" height="12" rx="2" />
+                <path d="M16 8 V5 a1 1 0 0 0 -1 -1 H5 a1 1 0 0 0 -1 1 v10 a1 1 0 0 0 1 1 h3" />
+            </symbol>
+            <symbol id="i-refresh" viewBox="0 0 24 24">
+                <path d="M20 12 a8 8 0 1 1 -2.9 -6.1" />
+                <polyline points="20,4 20,10 14,10" />
+            </symbol>
+            <symbol id="i-pencil" viewBox="0 0 24 24">
+                <path d="M4 20 L5 16 L15.5 5.5 L18.5 8.5 L8 19 Z" />
+                <line x1="13.7" y1="7.3" x2="16.7" y2="10.3" />
+            </symbol>
+            <symbol id="i-speaker" viewBox="0 0 24 24">
+                <path d="M4 9 v6 h4 l5 4 V5 l-5 4 z" />
+                <path d="M16.5 9 a5 5 0 0 1 0 6" />
+                <path d="M19 7 a8.2 8.2 0 0 1 0 10" />
+            </symbol>
+            <symbol id="i-stop" viewBox="0 0 24 24">
+                <rect x="7" y="7" width="10" height="10" rx="1.5" />
+            </symbol>
+            <symbol id="i-eye" viewBox="0 0 24 24">
+                <path
+                    d="M2 12 C4 6.5 8.5 4.5 12 4.5 C15.5 4.5 20 6.5 22 12 C20 17.5 15.5 19.5 12 19.5 C8.5 19.5 4 17.5 2 12 Z" />
+                <circle cx="12" cy="12" r="3" />
+            </symbol>
+            <symbol id="i-eye-off" viewBox="0 0 24 24">
+                <path
+                    d="M2 12 C4 6.5 8.5 4.5 12 4.5 C15.5 4.5 20 6.5 22 12 C20 17.5 15.5 19.5 12 19.5 C8.5 19.5 4 17.5 2 12 Z" />
+                <circle cx="12" cy="12" r="3" />
+                <line x1="3" y1="3" x2="21" y2="21" />
+            </symbol>
+            <symbol id="i-download" viewBox="0 0 24 24">
+                <line x1="12" y1="4" x2="12" y2="14.5" />
+                <polyline points="7,10 12,15 17,10" />
+                <path d="M5 19 h14" />
+            </symbol>
+            <symbol id="i-check" viewBox="0 0 24 24">
+                <polyline points="4,13 9,18 20,6" />
+            </symbol>
+            <symbol id="i-image" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <circle cx="8.5" cy="9.5" r="1.8" />
+                <path d="M21 16 l-6 -6 -9 9" />
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="app">
+
+        <!-- ============================ SIDEBAR ============================ -->
+        <aside class="sidebar" id="sidebar" aria-label="Conversations">
+            <div class="sidebar-top">
+                <div class="brand">
+                    <span class="brand-orb" aria-hidden="true"></span>
+                    <span class="brand-word">Sage</span>
+                </div>
+                <button class="icon-btn sidebar-close" id="sidebarCloseBtn" aria-label="Close menu">
+                    <svg class="icon">
+                        <use href="#i-close" />
+                    </svg>
+                </button>
+            </div>
+
+            <button class="new-chat-btn" id="newChatBtn">
+                <svg class="icon">
+                    <use href="#i-plus" />
+                </svg>
+                New conversation
+            </button>
+
+            <nav class="conversation-list" id="conversationList"></nav>
+
+            <div class="sidebar-bottom">
+                <button class="footer-btn" id="themeToggleBtn" aria-label="Toggle theme">
+                    <svg class="icon icon-sun">
+                        <use href="#i-sun" />
+                    </svg>
+                    <svg class="icon icon-moon">
+                        <use href="#i-moon" />
+                    </svg>
+                    <span class="theme-label">Theme</span>
+                </button>
+                <button class="footer-btn" id="settingsBtn" aria-label="Open settings">
+                    <svg class="icon">
+                        <use href="#i-sliders" />
+                    </svg>
+                    <span>Settings</span>
+                </button>
+            </div>
+        </aside>
+
+        <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+        <!-- ============================ MAIN ============================ -->
+        <main class="chat-main">
+            <header class="chat-header">
+                <button class="icon-btn sidebar-open" id="sidebarOpenBtn" aria-label="Open menu">
+                    <svg class="icon">
+                        <use href="#i-menu" />
+                    </svg>
+                </button>
+
+                <h1 class="chat-title" id="chatTitle">New conversation</h1>
+
+                <div class="header-right">
+                    <label class="model-picker">
+                        <span class="sr-only">Model</span>
+                        <select id="modelSelect" aria-label="Model">
+                            <option value="models/gemini-3.6-flash">Gemini 3.6 Flash (latest)</option>
+                            <option value="__custom__">Custom model id…</option>
+                        </select>
+                    </label>
+                    <label class="language-picker">
+                        <span class="sr-only">Language</span>
+                        <select id="languageSelect" aria-label="Language">
+                            <option value="en">English</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="hi">हिन्दी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                        </select>
+                    </label>
+                    <input type="text" id="customModelInput" class="custom-model-input" placeholder="model id" hidden />
+
+                    <button class="icon-btn" id="exportBtn" title="Export conversation as Markdown"
+                        aria-label="Export conversation">
+                        <svg class="icon">
+                            <use href="#i-download" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="chat-scroll" id="chatScroll">
+                <div class="empty-state" id="emptyState">
+                    <div class="hero-orb" aria-hidden="true"><span></span></div>
+                    <h2 class="hero-greeting" data-i18n="heroGreeting">Ask me anything.</h2>
+                    <p class="hero-sub" data-i18n="heroSub">I'm Sage — calm, considered, and a little curious. Powered by Gemini.</p>
+                    <div class="hero-hints">
+                        <button class="hint-chip"
+                            data-i18n="hintSimple"
+                            data-hint="Explain quantum computing the way you'd explain it to a curious 12-year-old.">Explain
+                            something simply</button>
+                        <button class="hint-chip"
+                            data-i18n="hintCode"
+                            data-hint="Give me a clean, well-commented Python function to check if a string is a palindrome.">Write
+                            some code</button>
+                        <button class="hint-chip"
+                            data-i18n="hintDinner"
+                            data-hint="I have onions, eggs, and leftover rice. Suggest a quick dinner.">Plan a quick
+                            dinner</button>
+                    </div>
+                </div>
+
+                <div class="messages" id="messages"></div>
+            </div>
+
+            <div class="composer-wrap">
+                <div class="composer" id="composer">
+
+                    <div class="composer-row">
+                        <textarea id="composerInput" class="composer-input" placeholder="Message Sage…" rows="1"
+                            aria-label="Message"></textarea>
+
+                        <button class="icon-btn mic-btn" id="micBtn" title="Voice input" aria-label="Voice input">
+                            <svg class="icon">
+                                <use href="#i-mic" />
+                            </svg>
+                        </button>
+
+                        <button class="send-btn" id="sendBtn" title="Send message" aria-label="Send message">
+                            <svg class="icon">
+                                <use href="#i-send" />
+                            </svg>
+                        </button>
+                        <button class="send-btn stop-btn" id="stopBtn" title="Stop generating"
+                            aria-label="Stop generating" hidden>
+                            <svg class="icon">
+                                <use href="#i-stop" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="composer-footer">
+                        <div class="temp-control" title="Controls generation temperature">
+                            <span class="temp-label temp-cool">Precise</span>
+                            <input type="range" id="tempSlider" min="0" max="2" step="0.05" value="1"
+                                aria-label="Temperature" />
+                            <span class="temp-label temp-warm">Creative</span>
+                            <span class="temp-value" id="tempValue">1.0</span>
+                        </div>
+                        <div class="composer-meta" id="composerMeta"></div>
+                    </div>
+                </div>
+                <p class="composer-footnote" data-i18n="footnote">Sage can make mistakes. Consider checking important information.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- ============================ SETTINGS MODAL ============================ -->
+    <div class="modal-overlay" id="settingsOverlay" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+            <div class="modal-header">
+                <h2 id="settingsTitle">Settings</h2>
+                <button class="icon-btn" id="settingsCloseBtn" aria-label="Close settings">
+                    <svg class="icon">
+                        <use href="#i-close" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <label class="field">
+                    <span class="field-label">Gemini API key</span>
+                    <div class="key-input-row">
+                        <input type="password" id="apiKeyInput" class="field-input"
+                            placeholder="Paste your free Gemini API key" autocomplete="off" spellcheck="false" />
+                        <button class="icon-btn" id="toggleKeyVisibilityBtn" aria-label="Show or hide key">
+                            <svg class="icon icon-eye">
+                                <use href="#i-eye" />
+                            </svg>
+                            <svg class="icon icon-eye-off" hidden>
+                                <use href="#i-eye-off" />
+                            </svg>
+                        </button>
+                    </div>
+                    <span class="field-hint">Stored only in this browser's local storage and sent directly to Google's
+                        API — never anywhere else. Get a free key at <a href="https://aistudio.google.com/apikey"
+                            target="_blank" rel="noopener">aistudio.google.com/apikey</a>.</span>
+                </label>
+
+                <label class="field">
+                    <span class="field-label">Default persona</span>
+                    <textarea id="personaInput" class="field-input field-textarea" rows="4"></textarea>
+                    <span class="field-hint">This system instruction is sent with every new conversation. Leave it blank
+                        for Gemini's default behavior.</span>
+                </label>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-ghost" id="settingsCancelBtn">Cancel</button>
+                <button class="btn-primary" id="settingsSaveBtn">Save settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================ TOASTS ============================ -->
+    <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
